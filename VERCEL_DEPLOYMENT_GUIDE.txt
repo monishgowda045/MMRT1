@@ -1,0 +1,144 @@
+VERCEL DEPLOYMENT GUIDE FOR MMRT WEBSITE
+==========================================
+
+This guide will help you deploy your MMRT website to Vercel so you can share it with trust members for feedback and editing.
+
+STEP 1: PREPARE YOUR PROJECT
+-----------------------------
+1. Make sure all your files are saved
+2. Your project structure should be:
+   - index.html (main page)
+   - css/styles.css
+   - js/main.js
+   - assets/images/ (all images)
+   - All other files
+
+STEP 2: CREATE A GITHUB REPOSITORY (OPTIONAL BUT RECOMMENDED)
+-------------------------------------------------------------
+This makes it easier to manage and allows trust members to see changes.
+
+Option A: Using GitHub Desktop (Easiest)
+1. Download GitHub Desktop from: https://desktop.github.com/
+2. Open GitHub Desktop
+3. Click "File" → "Add Local Repository"
+4. Click "Choose" and select your MMRT folder
+5. Click "Publish repository" (make it public or private - your choice)
+6. Give it a name like "mmrt-website" and publish
+
+Option B: Using Command Line
+1. Open Terminal
+2. Navigate to your project:
+   cd /Users/ujwalar/1.DEVELOPMENT/WEB_DEV/MMRT
+3. Initialize git (if not already done):
+   git init
+4. Add all files:
+   git add .
+5. Commit:
+   git commit -m "Initial commit - MMRT website"
+6. Create a new repository on GitHub.com
+7. Link and push:
+   git remote add origin https://github.com/YOUR_USERNAME/mmrt-website.git
+   git branch -M main
+   git push -u origin main
+
+STEP 3: DEPLOY TO VERCEL
+-------------------------
+Method 1: Using Vercel Website (Easiest)
+1. Go to: https://vercel.com
+2. Sign up/Login (you can use GitHub account for easy integration)
+3. Click "Add New Project"
+4. If you connected GitHub:
+   - Select your repository
+   - Click "Import"
+5. If not using GitHub:
+   - Click "Deploy without Git"
+   - Drag and drop your MMRT folder
+6. Vercel will automatically detect it's a static site
+7. Click "Deploy"
+8. Wait 1-2 minutes for deployment
+9. You'll get a URL like: https://mmrt-website.vercel.app
+
+Method 2: Using Vercel CLI
+1. Install Vercel CLI:
+   npm install -g vercel
+2. Navigate to your project:
+   cd /Users/ujwalar/1.DEVELOPMENT/WEB_DEV/MMRT
+3. Run:
+   vercel
+4. Follow the prompts:
+   - Login to Vercel
+   - Link to existing project or create new
+   - Confirm settings
+5. Deploy:
+   vercel --prod
+
+STEP 4: SHARE WITH TRUST MEMBERS
+---------------------------------
+1. Once deployed, you'll get a public URL
+2. Share this URL with trust members
+3. They can view the website on their phones/computers
+4. They can give you feedback on:
+   - Content changes needed
+   - Images to add
+   - Text corrections
+   - Design suggestions
+
+STEP 5: MAKING UPDATES
+----------------------
+Method 1: If using GitHub
+1. Make changes to your files locally
+2. Commit and push to GitHub:
+   git add .
+   git commit -m "Updated content"
+   git push
+3. Vercel will automatically redeploy (takes 1-2 minutes)
+
+Method 2: If not using GitHub
+1. Make changes to your files
+2. Go to Vercel dashboard
+3. Click on your project
+4. Go to "Deployments" tab
+5. Click "Redeploy" or drag-drop updated folder
+
+STEP 6: CUSTOM DOMAIN (OPTIONAL - FOR LATER)
+---------------------------------------------
+If you want a custom domain like www.mmrt.org:
+1. Go to Vercel project settings
+2. Click "Domains"
+3. Add your domain
+4. Follow DNS configuration instructions
+
+IMPORTANT NOTES:
+----------------
+- Vercel is FREE for personal projects
+- Your website will be publicly accessible via the URL
+- Updates are instant after deployment
+- You can preview changes before making them live
+- All your files stay on your computer - Vercel just hosts them
+
+TROUBLESHOOTING:
+----------------
+If images don't load:
+- Make sure image paths are correct (relative paths like "assets/images/logo.png")
+- Check that all images are in the assets/images folder
+
+If language toggle doesn't work:
+- Make sure JavaScript is enabled in browser
+- Check browser console for errors (F12)
+
+If styles look wrong:
+- Clear browser cache (Ctrl+Shift+R or Cmd+Shift+R)
+- Check that css/styles.css path is correct
+
+QUICK START (FASTEST METHOD):
+------------------------------
+1. Go to https://vercel.com
+2. Sign up with GitHub
+3. Click "Add New Project"
+4. If you have GitHub repo: Select it and click "Deploy"
+5. If not: Click "Deploy without Git" and drag your MMRT folder
+6. Wait 2 minutes
+7. Share the URL with trust members!
+
+Your website will be live at: https://your-project-name.vercel.app
+

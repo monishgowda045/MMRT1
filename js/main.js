@@ -1,91 +1,135 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize language
-    const currentLang = localStorage.getItem('language') || 'kn';
+    // Initialize language from localStorage or default to Kannada
+    const savedLang = localStorage.getItem('language') || 'kn';
+    let currentLang = savedLang;
+    
+    // Set initial language
     document.documentElement.lang = currentLang;
-    document.getElementById('languageSelect').value = currentLang;
+    updateLanguage(currentLang);
 
-    // Language translation functionality
-    window.changeLanguage = function(lang) {
-        document.documentElement.lang = lang;
-        localStorage.setItem('language', lang);
+    // Function to update all text elements with language
+    function updateLanguage(lang) {
+        const langAttr = `data-lang-${lang}`;
         
-        // Reload the page to apply translations
-        window.location.reload();
-    };
-
-    // Check if user has visited before
-    const hasVisited = sessionStorage.getItem('hasVisited');
-    const isHomePage = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
-    
-    // Only show logo animation on home page and first visit
-    if (isHomePage && !hasVisited) {
-        const logoIntro = document.querySelector('.logo-intro-container');
-        if (logoIntro) {
-            logoIntro.style.display = 'flex';
-            setTimeout(() => {
-                logoIntro.style.opacity = '0';
-                setTimeout(() => {
-                    logoIntro.style.display = 'none';
-                },);
-            }, 5500);
-            // Set visited flag
-            sessionStorage.setItem('hasVisited', 'true');
-        }
-    } else {
-        // Hide logo container on other pages or subsequent visits
-        const logoIntro = document.querySelector('.logo-intro-container');
-        if (logoIntro) {
-            logoIntro.style.display = 'none';
-        }
-    }
-
-    const header = document.querySelector('header');
-    const nav = document.querySelector('nav');
-    const menuToggle = document.querySelector('.menu-toggle');
-    
-    // Sticky Header
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            header.classList.add('sticky');
-        } else {
-            header.classList.remove('sticky');
-        }
-    });
-
-    // Mobile Menu Toggle
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-            nav.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-            document.body.classList.toggle('no-scroll');
+        // Update all elements with language data attributes
+        document.querySelectorAll('[data-lang-kn], [data-lang-en]').forEach(element => {
+            const text = element.getAttribute(langAttr);
+            if (text) {
+                if (element.tagName === 'TITLE') {
+                    document.title = text;
+                } else {
+                    element.textContent = text;
+                }
+            }
         });
     }
 
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (nav.classList.contains('active') && 
-            !nav.contains(e.target) && 
-            !menuToggle.contains(e.target)) {
-            nav.classList.remove('active');
-            menuToggle.classList.remove('active');
-            document.body.classList.remove('no-scroll');
+    // Language toggle functionality
+    const languageToggle = document.getElementById('languageToggle');
+    if (languageToggle) {
+        // Set initial button text based on current language
+        const langText = languageToggle.querySelector('.lang-text');
+        if (langText) {
+            langText.textContent = currentLang === 'kn' ? 'English' : 'ಕನ್ನಡ';
         }
-    });
+        
+        languageToggle.addEventListener('click', function() {
+            currentLang = currentLang === 'kn' ? 'en' : 'kn';
+            document.documentElement.lang = currentLang;
+            localStorage.setItem('language', currentLang);
+            updateLanguage(currentLang);
+            
+            // Update button text
+            if (langText) {
+                langText.textContent = currentLang === 'kn' ? 'English' : 'ಕನ್ನಡ';
+            }
+        });
+    }
 
-    // Smooth scrolling for anchor links
+    // Logo animation handling
+    const hasVisited = sessionStorage.getItem('hasVisited');
+    const logoAnimationContainer = document.querySelector('.logo-animation-container');
+    
+    if (logoAnimationContainer) {
+        if (hasVisited) {
+            // Hide immediately if user has visited before
+            logoAnimationContainer.style.display = 'none';
+        } else {
+            // Show animation on first visit
+            logoAnimationContainer.style.display = 'flex';
+            
+            // Hide after animation completes (2s animation + 1.5s delay = 3.5s total)
+            setTimeout(() => {
+                logoAnimationContainer.style.opacity = '0';
+                setTimeout(() => {
+                    logoAnimationContainer.style.display = 'none';
+                }, 500);
+            }, 3500);
+            
+            // Mark as visited
+            sessionStorage.setItem('hasVisited', 'true');
+        }
+    }
+
+    // Toggle other members section
+    const toggleMembersBtn = document.getElementById('toggleMembersBtn');
+    const otherMembersGrid = document.getElementById('otherMembersGrid');
+    
+    if (toggleMembersBtn && otherMembersGrid) {
+        toggleMembersBtn.addEventListener('click', function() {
+            toggleMembersBtn.classList.toggle('active');
+            otherMembersGrid.classList.toggle('active');
+        });
+    }
+
+    // Smooth scroll for any anchor links (if needed in future)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
-                // Close mobile menu after clicking
-                nav.classList.remove('active');
-                menuToggle.classList.remove('active');
-                document.body.classList.remove('no-scroll');
+            const href = this.getAttribute('href');
+            if (href !== '#' && href.length > 1) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
             }
         });
     });
+
+    // Add scroll effect to header (optional enhancement)
+    const header = document.querySelector('.minimal-header');
+    if (header) {
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.15)';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            }
+            
+            lastScroll = currentScroll;
+        });
+    }
+
+    // Lazy loading for images (if browser supports it)
+    if ('loading' in HTMLImageElement.prototype) {
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        images.forEach(img => {
+            img.src = img.src;
+        });
+    } else {
+        // Fallback for browsers that don't support lazy loading
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
+        document.body.appendChild(script);
+    }
 });

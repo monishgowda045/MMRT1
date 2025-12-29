@@ -1,0 +1,9 @@
+My aim 
+
+There is a trust called as Madhura mandya rangakala trust , where a group of people who share common interest in the South Indian stage plays (revolving around Ramayana and Mahabharata ) have united and made this trust to organize , setup, encourage others and members themselves play in stage plays . Apart from this in free time they also do some socially good activities like cleaning temples , donating necessary items to schools as such 
+
+Majority of the trust members and main positions are held from my family only , since im a engineering student I wanted to make a static website for the same showing main main things 
+
+Website should have a nice gallery about and the images of the members thats it and a nice graphics ui and so on obviously 
+Main audience is from kannada background (so by default I want the website to have all the texts in the same and a button somewhere to change whole text to English) and 99.9% uses phone only so website should focus main on the Mobile friendly UI .
+
